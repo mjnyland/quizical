@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import Button from "./button";
+import Buttons from "./buttons";
 
 const Question = (props) => {
   //selected answer state
@@ -11,19 +11,9 @@ const Question = (props) => {
     console.log(selectedAnswer);
   }
 
-  //Setting up for shuffled
-  const questions = [props.correct];
-  props.incorrect.forEach((i) => questions.push(i));
-
-  //Shuffling
-  const shuffled = questions
-    .map((value) => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
-
   const buttons = (
-    <Button
-      answers={questions}
+    <Buttons
+      answers={props.shuffledAnswers}
       selectedAnswer={selectedAnswer}
       setAnswer={handleAnswerSelection}
     />
@@ -39,5 +29,14 @@ const Question = (props) => {
     </div>
   );
 };
-
 export default Question;
+
+// //Setting up for shuffled
+// const answers = [props.correct];
+// props.incorrect.forEach((i) => answers.push(i));
+
+// //Shuffling
+// const shuffled = answers
+//   .map((value) => ({ value, sort: Math.random() }))
+//   .sort((a, b) => a.sort - b.sort)
+//   .map(({ value }) => value);

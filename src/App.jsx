@@ -28,18 +28,41 @@ function App() {
       });
   }, []);
 
+  console.log(questions[0]);
+
+  function shuffleAnswers(arr, i) {
+    //Setting up for shuffled
+    const answers = [];
+
+    arr.forEach((answer) => {
+      answers.push(answer);
+    });
+
+    answers.push(i);
+
+    const shuffled = answers
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+    return shuffled;
+  }
+
   function handleButtonClick(e) {
     setSelected(() => !false);
   }
 
   let els = questions.map((obj) => {
+    console.log(obj);
     return (
       <Question
         key={nanoid()}
         question={decode(obj.question)}
-        correct={decode(obj.correct_answer)}
-        incorrect={decode(obj.incorrect_answers)}
         buttonClick={handleButtonClick}
+        correctAnswer={obj.correctAnswer}
+        shuffledAnswers={shuffleAnswers(
+          decode(obj.incorrect_answers),
+          decode(obj.correct_answer)
+        )}
       />
     );
   });
