@@ -4,21 +4,27 @@ import Buttons from "./buttons";
 
 const Question = (props) => {
   //selected answer state
-  const [selectedAnswer, setSelectedAnswer] = useState("");
+  const [selectedAnswer, setSelectedAnswer] = useState(
+    "default selected answer"
+  );
 
-  function handleAnswerSelection(answer) {
-    setSelectedAnswer(answer);
-    console.log(selectedAnswer);
+  function handleAnswerSelection(string) {
+    setSelectedAnswer(string);
+    props.setSelections(string);
   }
 
-  const buttons = (
+  useEffect(() => {
+    //console.log(selectedAnswer);
+    props.addSelection(() => selectedAnswer);
+  }, [selectedAnswer]);
+
+  const buttons = props.question.map(() => {
     <Buttons
       answers={props.shuffledAnswers}
       selectedAnswer={selectedAnswer}
       setAnswer={handleAnswerSelection}
-    />
-  );
-
+    />;
+  });
   //Detect somethings been selected
   //re-render, with the selected question active
 

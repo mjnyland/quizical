@@ -4,8 +4,8 @@ import { nanoid } from "nanoid";
 const Buttons = (props) => {
   //set a button selected state
 
-  function handleClick(el) {
-    props.setAnswer(el);
+  function handleClick(string) {
+    props.setAnswer(string);
   }
 
   return (

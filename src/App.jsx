@@ -7,6 +7,7 @@ import { nanoid } from "nanoid";
 function App() {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selections, setSelections] = useState([]);
 
   useEffect(() => {
     console.log("about to fetch");
@@ -28,8 +29,6 @@ function App() {
       });
   }, []);
 
-  console.log(questions[0]);
-
   function shuffleAnswers(arr, i) {
     //Setting up for shuffled
     const answers = [];
@@ -47,18 +46,17 @@ function App() {
     return shuffled;
   }
 
-  function handleButtonClick(e) {
-    setSelected(() => !false);
+  function handleSubmit() {
+    console.log("firing");
   }
 
   let els = questions.map((obj) => {
-    console.log(obj);
     return (
       <Question
         key={nanoid()}
         question={decode(obj.question)}
-        buttonClick={handleButtonClick}
         correctAnswer={obj.correctAnswer}
+        addSelection={setSelections}
         shuffledAnswers={shuffleAnswers(
           decode(obj.incorrect_answers),
           decode(obj.correct_answer)
@@ -71,6 +69,9 @@ function App() {
     <div>
       {loading && <h1>Loading...</h1>}
       {els}
+      <button onClick={() => handleSubmit()} className="submit-button">
+        Submit
+      </button>
     </div>
   );
 }
